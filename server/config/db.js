@@ -12,15 +12,17 @@ if (process.env.DB_SOCKET_PATH) {
   };
 }
 
-const sequelize = new Sequelize(process.env.DB_URL, sequelizeConfig);
+const dbUrl = process.env.DB_URL || process.env.MYSQL_URL;
+const sequelize = new Sequelize(dbUrl, sequelizeConfig);
 
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('MySQL Database connected successfully.');
+    return true;
   } catch (error) {
     console.error('Unable to connect to the database:', error);
-    process.exit(1);
+    return false;
   }
 };
 

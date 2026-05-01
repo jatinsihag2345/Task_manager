@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../App';
+import { AuthContext } from '../authContext';
 import api from '../api';
-import { Layout } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const googleButtonRef = useRef(null);
 
-  const handleGoogleResponse = async (response) => {
+  const handleGoogleResponse = useCallback(async (response) => {
     try {
       setError('');
       const res = await api.post('/auth/google', { credential: response.credential });
@@ -21,7 +21,7 @@ const Login = () => {
     } catch (err) {
       setError(err.response?.data?.message || 'Google sign-in failed');
     }
-  };
+  }, [login, navigate]);
 
   useEffect(() => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -54,7 +54,7 @@ const Login = () => {
     script.dataset.googleIdentity = 'true';
     script.onload = renderGoogleButton;
     document.body.appendChild(script);
-  }, []);
+  }, [handleGoogleResponse]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,42 +68,47 @@ const Login = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div className="card glass" style={{ width: '400px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Layout size={48} color="var(--primary)" style={{ marginBottom: '16px' }} />
-          <h2>Task Manager for Ethara AI by Jatin</h2>
-          <p style={{ color: 'var(--text-muted)' }}>Sign in to continue to your workspace</p>
+    <div className="ai-auth">
+      <div className="ai-auth-card">
+        <div className="ai-auth-head">
+          <div className="ai-auth-mark" aria-hidden="true">
+            <Sparkles size={20} />
+          </div>
+          <div>
+            <div className="ai-auth-title">Task Assignment for Ethara</div>
+            <div className="ai-auth-sub">Sign in to continue.</div>
+          </div>
         </div>
 
-        {error && <div style={{ color: 'var(--danger)', marginBottom: '16px', textAlign: 'center' }}>{error}</div>}
+        {error ? <div className="ai-alert ai-alert-bad">{error}</div> : null}
 
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="ai-field">
             <label>Email Address</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
-          <div className="input-group">
+          <div className="ai-field">
             <label>Password</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+          <button type="submit" className="ai-btn ai-btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
             Login
           </button>
         </form>
 
         {import.meta.env.VITE_GOOGLE_CLIENT_ID && (
           <>
-            <div style={{ textAlign: 'center', margin: '16px 0', color: 'var(--text-muted)' }}>or</div>
+            <div className="ai-auth-or">or</div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div ref={googleButtonRef} />
             </div>
           </>
         )}
 
-        <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)' }}>
-          Don't have an account? <Link to="/signup" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Signup</Link>
-        </p>
+        <div className="ai-auth-foot">
+          <span>Don't have an account?</span>
+          <Link to="/signup">Signup</Link>
+        </div>
       </div>
     </div>
   );

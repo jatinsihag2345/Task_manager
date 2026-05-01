@@ -2,8 +2,10 @@
   "name": "team-task-manager-root",
   "version": "1.0.0",
   "scripts": {
-    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "postinstall": "npm ci --prefix client && npm ci --prefix server",
     "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "build": "npm run build --prefix client",
+    "start": "npm run start --prefix server",
     "client": "npm run dev --prefix client",
     "server": "npm run dev --prefix server"
    

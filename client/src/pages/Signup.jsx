@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../App';
+import { AuthContext } from '../authContext';
 import api from '../api';
-import { Layout } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -24,37 +24,42 @@ const Signup = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div className="card glass" style={{ width: '400px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Layout size={48} color="var(--primary)" style={{ marginBottom: '16px' }} />
-          <h2>Task Manager for Ethara AI by Jatin</h2>
-          <p style={{ color: 'var(--text-muted)' }}>Create your account to start managing projects</p>
+    <div className="ai-auth">
+      <div className="ai-auth-card">
+        <div className="ai-auth-head">
+          <div className="ai-auth-mark" aria-hidden="true">
+            <Sparkles size={20} />
+          </div>
+          <div>
+            <div className="ai-auth-title">Task Assignment for Ethara</div>
+            <div className="ai-auth-sub">Create an account to start.</div>
+          </div>
         </div>
 
-        {error && <div style={{ color: 'var(--danger)', marginBottom: '16px', textAlign: 'center' }}>{error}</div>}
+        {error ? <div className="ai-alert ai-alert-bad">{error}</div> : null}
 
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="ai-field">
             <label>Full Name</label>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
-          <div className="input-group">
+          <div className="ai-field">
             <label>Email Address</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
-          <div className="input-group">
+          <div className="ai-field">
             <label>Password</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+          <button type="submit" className="ai-btn ai-btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
             Signup
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)' }}>
-          Already have an account? <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Login</Link>
-        </p>
+        <div className="ai-auth-foot">
+          <span>Already have an account?</span>
+          <Link to="/login">Login</Link>
+        </div>
       </div>
     </div>
   );
