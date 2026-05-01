@@ -1,0 +1,16 @@
+node_modules
+
+# Build outputs
+client/dist
+dist
+
+# Env files
+.env
+server/.env
+client/.env
+
+# OS / editor
+.DS_Store
+
+# Codex app metadata
+.codex
