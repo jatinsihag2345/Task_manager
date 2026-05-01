@@ -1,0 +1,14 @@
+{
+  "name": "team-task-manager-root",
+  "version": "1.0.0",
+  "scripts": {
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server"
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
