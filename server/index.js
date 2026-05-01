@@ -27,7 +27,9 @@ if (process.env.NODE_ENV === 'production') {
   const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
   app.use(express.static(clientDistPath));
 
-  app.get('*', (req, res) => {
+  // Express 5 + path-to-regexp does not accept bare "*" routes.
+  // Use a regex fallback for SPA routes (and keep /api/* handled above).
+  app.get(/^(?!\/api).*/, (req, res) => {
     res.sendFile(path.join(clientDistPath, 'index.html'));
   });
 }
