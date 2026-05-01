@@ -18,7 +18,7 @@ npm install
 
 2. Configure the backend env:
 
-Create `server/.env`:
+Create `server/.env` (see `server/.env.example`):
 
 ```bash
 DB_URL="mysql://USER:PASSWORD@HOST:3306/DB_NAME"
@@ -29,7 +29,7 @@ PORT=5001
 
 3. Configure the frontend env (optional):
 
-Create `client/.env`:
+Create `client/.env` (see `client/.env.example`):
 
 ```bash
 VITE_API_URL="http://localhost:5001/api"
