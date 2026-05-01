@@ -105,14 +105,6 @@ Team Task Manager/
 
 ---
 
-## Submission
-
-| Item        | Link |
-| ----------- | ---- |
-| Live App    |  https://radiant-tenderness-production-f64f.up.railway.app/    |
-| GitHub Repo |https://github.com/govindheda070504/Team_Task_Manager.git   |
-| Demo Video  | https://drive.google.com/drive/folders/18V0eG9Kp7Hkho5noXwhuo3aHWouJgzex?usp=sharing     |
-
 ---
 
 ## Notes
